@@ -33,5 +33,4 @@ const trigger = raffleDraw({
 List of invalid numbers:
 - non integer numbers
 - negative numbers
-- numbers that are higher than `amountOfTickets`
-*
+- numbers that are higher than `amountOfTickets`*
