@@ -31,7 +31,7 @@ const trigger = raffleDraw({
 * **winPct** shows the chances of triggering
 * **winningTickets** is an array of all the numbers that will set "isWinning" to true if randomized
 
-#### Also it's possible to define the array of winningTickets instead of letting the function randomize it:
+#### Also it's possible to define the array of `winningTickets` instead of letting the function randomize it:
 ```js
 
 const trigger = raffleDraw({
