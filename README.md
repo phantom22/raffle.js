@@ -1,7 +1,8 @@
 # raffle.js
 
-Instead of using code like in the example above, raffle.js (improves?) randomizing by creating an array of random numbers in a range between 0 and the `amountOfWinningTickets` variable and then randomizes a random number, that if included in the array, will return `true`.
+Instead of using code like in the example above, raffle.js (improves?) randomizing by creating an array of random numbers in a range between 0 and the `amountOfWinningTickets` variable and then randomizes a number, that if included in the array, will return `true`.
 
+Example of randomizing a trigger the old way:
 ```js
 
 const chance = 20,
