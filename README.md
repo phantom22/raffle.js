@@ -28,10 +28,9 @@ const trigger = raffleDraw({
 ## `raffleDraw` returns an object with the following variables:
 * **drawnTicket** is the number randomized by the function
 * **isWinning** is a boolean, and it will be used exactly as `Math.floor( Math.random() * number1 ) <= number2` in an application
-* **winPct** shows the chances of triggering
 * **winningTickets** is an array of all the numbers that will set "isWinning" to true if randomized
 
-#### Also it's possible to define the array of `winningTickets` instead of letting the function randomize it:
+#### Defining the array of `winningTickets` instead of letting the function randomize it:
 ```js
 
 const trigger = raffleDraw({
@@ -50,4 +49,20 @@ List of invalid numbers:
 
 *Obviously it's still `pseudo-random` because the numbers are created entirely with `Math.random`.*
 
+## Adding a callback to the function:
+```js
+
+const trigger = raffleDraw({
+
+  amountOfTickets: 100,
+  amountOfWinningTickets: 50, // 50% of isWinning being set to true
+  events: [
+    { requiredTickets: true, callback() { console.log("You won!") } }, // if requiredTickets is a boolean then it checks the isWinning variable
+    { requiredTickets: false, callback() { console.log("You lost!") } },
+    { requiredTickets: [25], callback() { console.log("Your ticket number is 25!") } }, // triggers exclusively if the drawnTicket variable is equal to the requiredTickets[0] variable
+    { requiredTickets: [25,35], callback() { console.log("Your ticket number is between 25 and 35!") } } // the number range includes the two numbers used to define it
+  ]
+})
+
+```
 **Hope you enjoy this little project and give me some feedback!**
