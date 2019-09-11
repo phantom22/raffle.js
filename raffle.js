@@ -73,15 +73,3 @@ function raffleDraw(object) {
   }
 
 }
-
-raffleDraw({ 
-  amountOfTickets: 100, 
-  amountOfWinningTickets: 10, 
-  events: [
-
-    { requiredTickets: [0,10], callback(){ console.log("10%") } },
-    { requiredTickets: [11,50], callback(){ console.log("50%") } },
-    { requiredTickets: [51,100], callback(){ console.log("100%") } }
-
-  ] 
-});
