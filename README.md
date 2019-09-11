@@ -83,5 +83,22 @@ const random = raffleDraw({
 }).drawnTicket;
 
 ```
+## Returning an array containing all the callback values:
+```js
+const trigger = raffleDraw({
+
+  amountOfTickets: 100,
+  amountOfWinningTickets: 100, // 50% of isWinning being set to true
+  events: [
+    { requiredTickets: [1,100], overrideReturn: true, callback() { return 1 } },
+    { requiredTickets: [1,100], overrideReturn: true, callback() { return 2 } },
+    { requiredTickets: [1,100], overrideReturn: true, callback() { return 3 } },
+  ]
+});
+
+console.log(trigger); // [1,2,3]
+
+```
+*All the callbacks with overrideReturn will push into an array their return value, as a result `raffleDraw` won't return an object but an array with these values.*
 **P.S the randomized numbers inside of the `raffleDraw` function will constist of numbers between `1` and the `amountOfTickets` variable!
 So it's possible to make a trigger with no chance of winning by setting `winningTickets` to `[0]`, a number that cannot be randomized inside the function**
