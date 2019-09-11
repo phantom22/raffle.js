@@ -2,19 +2,18 @@ function raffleDraw(object) {
 
   if ( typeof object === "object" ) {
 
-    const { amountOfTickets, amountOfWinningTickets, winningTickets, events } = object;
+    const { amountOfTickets, amountOfWinningTickets, winningTickets, events } = object,
+	a = amountOfTickets,
+    random = () => Math.floor( Math.random() * a + 1 ),
+    callbackReturn = [];
 
-    const a = amountOfTickets,
-    random = () => Math.floor( Math.random() * a + 1 );
     let b = typeof amountOfWinningTickets === "number" ? amountOfWinningTickets : void 0,
     c = typeof winningTickets !== "undefined" ? winningTickets : void 0;
 
-    if ( typeof ( a + b ) === "number" && Number.isInteger( a + b ) && b <= a || typeof a === "number" && Array.isArray(c) && c.length <= a ) {
+    if ( typeof ( a + b ) === "number" && a > 0 && Number.isInteger( a + b ) && b <= a || typeof a === "number" && a > 0 && Array.isArray(c) && c.length <= a ) {
 
       c = typeof c !== "undefined" && typeof c.reduce( ( a, b ) => a + b ) === "number" ? c : [];
-
       c.forEach( v => { if ( ( Number.isInteger(v) === true && v >= 0 && v <= a && c.slice( c.indexOf(v) + 1 ).indexOf(v) === -1 ) === false ) { throw TypeError(`\`${v}' is an invalid ticket number.`) } } );
-
       b = c.length > 0 ? c.length : b;
 
       if ( c.length === 0 ) {
@@ -44,17 +43,26 @@ function raffleDraw(object) {
 
           events.forEach( v => {
 
-            const requiredTickets = v.requiredTickets,
-            callback = v.callback;
+            const { requiredTickets, callback, overrideReturn } = v;
 
-            if ( Array.isArray( requiredTickets ) && requiredTickets.length > 0 && requiredTickets.length <= 2 && typeof callback === "function" ) {
+            if ( typeof requiredTickets !== "undefined" && typeof callback === "function" ) {
 
-              const isNumber = typeof requiredTickets.reduce( ( a, b ) => a + b ) === "number",
+              const isNumber = Array.isArray(requiredTickets) && requiredTickets.length > 0 && requiredTickets.length <= 2 && typeof requiredTickets.reduce( ( a, b ) => a + b ) === "number",
               isBoolean = typeof requiredTickets === "boolean";
 
               if ( isNumber && requiredTickets.length === 1 && drawnTicket === requiredTickets[0] || isNumber && requiredTickets.length === 2 && drawnTicket >= requiredTickets[0] && drawnTicket <= requiredTickets[1] || isBoolean && requiredTickets === isWinning ) {
 
-                callback();
+            	if ( typeof overrideReturn === "undefined" ) {
+
+            		callback();
+
+            	}
+
+            	else if ( typeof overrideReturn === "boolean" && overrideReturn === true ) {
+
+                	callbackReturn.push(callback());
+
+            	}
 
               }
 
@@ -64,7 +72,7 @@ function raffleDraw(object) {
 
         }
 
-        return { isWinning, winningTickets: c, drawnTicket };
+        return callbackReturn.length === 0 ? { isWinning, winningTickets: c, drawnTicket } : callbackReturn;
 
       }
 
