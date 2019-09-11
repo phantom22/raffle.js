@@ -83,4 +83,5 @@ const random = raffleDraw({
 }).drawnTicket;
 
 ```
-**P.S the randomized `winningTickets` array of number will constist of numbers between 1 and the `amountOfTickets` variable!**
+**P.S the randomized numbers inside of the `raffleDraw` function will constist of numbers between `1` and the `amountOfTickets` variable!
+So it's possible to make a trigger with no chance of winning by setting `winningTickets` to `[0]`, a number that cannot be randomized inside the function**
