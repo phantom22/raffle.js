@@ -65,4 +65,20 @@ const trigger = raffleDraw({
 })
 
 ```
+## Returning randomized number after all the events are done:
+```js
+
+const random = raffleDraw({
+
+  amountOfTickets: 100,
+  amountOfWinningTickets: 50,
+  events: [
+    { requiredTickets: [1,10], callback() { console.log("You won!") } }, // triggers if requiredTickets is equal to the isWinning variable
+    { requiredTickets: [11,20], callback() { // do something } },
+    { requiredTickets: [21,30], callback() { // do something } },
+    { requiredTickets: [31,40], callback() { // do something} }
+  ]
+}).drawnTicket;
+
+```
 **Hope you enjoy this little project and give me some feedback!**
