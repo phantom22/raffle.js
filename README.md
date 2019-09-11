@@ -88,7 +88,7 @@ const random = raffleDraw({
 const trigger = raffleDraw({
 
   amountOfTickets: 100,
-  amountOfWinningTickets: 100, // 50% of isWinning being set to true
+  amountOfWinningTickets: 100,
   events: [
     { requiredTickets: [1,100], overrideReturn: true, callback() { return 1 } },
     { requiredTickets: [1,100], overrideReturn: true, callback() { return 2 } },
