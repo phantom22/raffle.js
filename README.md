@@ -62,6 +62,7 @@ const trigger = raffleDraw({
     { requiredTickets: [25], callback() { console.log("Your ticket number is 25!") } }, // triggers exclusively if the drawnTicket variable is equal to the requiredTickets[0] variable
     { requiredTickets: [25,35], callback() { console.log("Your ticket number is between 25 and 35!") } } // the number range includes the two numbers used to define it
   ]
+  
 })
 
 ```
@@ -80,6 +81,7 @@ const random = raffleDraw({
     { requiredTickets: true, callback() { /* do something if isWinning is true */ } },
     { requiredTickets: false, callback() { /* do something if isWinning is false */ } }
   ]
+  
 }).drawnTicket;
 
 ```
@@ -95,6 +97,7 @@ const trigger = raffleDraw({
     { requiredTickets: [1,100], overrideReturn: true, callback() { return 3 } },
     { requiredTickets: [1,100], callback() { return 4 } } // overrideReturn is not defined and as a result, "4" won't be pushed into the array.
   ]
+  
 });
 
 console.log(trigger); // [1,2,3]
