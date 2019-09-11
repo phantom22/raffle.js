@@ -1,6 +1,6 @@
 # raffle.js
 
-Instead of using code like in the example above, raffle.js (improves?) randomizing by creating an array of random numbers in a range between `1` and the `amountOfWinningTickets` variable and then randomizes a number, that if included in the array, will return `true`.
+Instead of using code like in the example above, raffle.js (improves?) randomizing events by creating an array of random numbers in a range between `1` and the `amountOfWinningTickets` variable and then randomizes a number, that if included in the array, will set isWinning to `true`. Also, this function allows making multiple function calls if the randomized number is included in **ranges of numbers** or is equal to a **particular integer** and stores the return values of all the events that provide a `returnOverride` variable set to `true` into an array, returned at the end of the iteration.
 
 ### Example of randomizing a trigger the old way:
 ```js
