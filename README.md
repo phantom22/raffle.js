@@ -90,9 +90,9 @@ const random = raffleDraw({
 const trigger = raffleDraw({
 
   amountOfTickets: 100,
-  amountOfWinningTickets: 100,
+  amountOfWinningTickets: 100, // 100% of isWinning being set to true
   events: [
-    { requiredTickets: [1,100], overrideReturn: true, callback() { return 1 } },
+    { requiredTickets: [1,100], overrideReturn: true, callback() { return 1 } }, // in this case, requiredTickets: [1,100] allows any randomized number to trigger the callback
     { requiredTickets: [1,100], overrideReturn: true, callback() { return 2 } },
     { requiredTickets: [1,100], overrideReturn: true, callback() { return 3 } },
     { requiredTickets: [1,100], callback() { return 4 } } // overrideReturn is not defined and as a result, "4" won't be pushed into the array.
