@@ -83,4 +83,4 @@ const random = raffleDraw({
 }).drawnTicket;
 
 ```
-**Hope you enjoy this little project and give me some feedback!**
+**P.S the randomized `winningTickets` array of number will constist of numbers between 1 and the `amountOfTickets` variable!**
