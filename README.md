@@ -57,7 +57,7 @@ const trigger = raffleDraw({
   amountOfTickets: 100,
   amountOfWinningTickets: 50, // 50% of isWinning being set to true
   events: [
-    { requiredTickets: true, callback() { console.log("You won!") } }, // if requiredTickets is a boolean then it checks the isWinning variable
+    { requiredTickets: true, callback() { console.log("You won!") } }, // triggers if requiredTickets is equal to the isWinning variable
     { requiredTickets: false, callback() { console.log("You lost!") } },
     { requiredTickets: [25], callback() { console.log("Your ticket number is 25!") } }, // triggers exclusively if the drawnTicket variable is equal to the requiredTickets[0] variable
     { requiredTickets: [25,35], callback() { console.log("Your ticket number is between 25 and 35!") } } // the number range includes the two numbers used to define it
