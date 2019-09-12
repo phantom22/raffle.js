@@ -3,9 +3,10 @@ function raffleDraw(object) {
   if ( typeof object === "object" ) {
 
     const { amountOfTickets, amountOfWinningTickets, winningTickets, events } = object,
-	a = amountOfTickets,
+  a = amountOfTickets,
     random = () => Math.floor( Math.random() * a + 1 ),
-    callbackReturn = [];
+    callbackReturn = [],
+    ticketValidation = function(v){ if ( typeof v !== "undefined" && ( Number.isInteger(v) === true && v >= 0 && v <= a && c.slice( c.indexOf(v) + 1 ).indexOf(v) === -1 ) === false ) { throw TypeError(`\`${v}' is an invalid ticket number.`) } };
 
     let b = typeof amountOfWinningTickets === "number" ? amountOfWinningTickets : void 0,
     c = typeof winningTickets !== "undefined" ? winningTickets : void 0;
@@ -13,7 +14,7 @@ function raffleDraw(object) {
     if ( typeof ( a + b ) === "number" && a > 0 && Number.isInteger( a + b ) && b <= a || typeof a === "number" && a > 0 && Array.isArray(c) && c.length <= a ) {
 
       c = typeof c !== "undefined" && typeof c.reduce( ( a, b ) => a + b ) === "number" ? c : [];
-      c.forEach( v => { if ( ( Number.isInteger(v) === true && v >= 0 && v <= a && c.slice( c.indexOf(v) + 1 ).indexOf(v) === -1 ) === false ) { throw TypeError(`\`${v}' is an invalid ticket number.`) } } );
+      c.forEach( v => ticketValidation(v) );
       b = c.length > 0 ? c.length : b;
 
       if ( c.length === 0 ) {
@@ -43,26 +44,31 @@ function raffleDraw(object) {
 
           events.forEach( v => {
 
-            const { requiredTickets, callback, overrideReturn } = v;
+            const { callback, storeValue } = v;
+            let { onSpecificTicket, onTicketRange, onIsWinningState } = v;
 
-            if ( typeof requiredTickets !== "undefined" && typeof callback === "function" ) {
+            if ( typeof onSpecificTicket !== "undefined" || typeof onTicketRange !== "undefined" || typeof onIsWinningState !== "undefined" ) {
 
-              const isNumber = Array.isArray(requiredTickets) && requiredTickets.length > 0 && requiredTickets.length <= 2 && typeof requiredTickets.reduce( ( a, b ) => a + b ) === "number",
-              isBoolean = typeof requiredTickets === "boolean";
+              onSpecificTicket = typeof onSpecificTicket === "number" ? onSpecificTicket : void 0;
+              onTicketRange = typeof onTicketRange !=="undefined" && Array.isArray(onTicketRange) && typeof onTicketRange.reduce( ( a, b ) => a + b ) === "number" ? onTicketRange : void 0;
+              onIsWinningState = typeof onIsWinningState === "boolean" ? onIsWinningState : void 0;
 
-              if ( isNumber && requiredTickets.length === 1 && drawnTicket === requiredTickets[0] || isNumber && requiredTickets.length === 2 && drawnTicket >= requiredTickets[0] && drawnTicket <= requiredTickets[1] || isBoolean && requiredTickets === isWinning ) {
+              typeof onSpecificTicket !== "undefined" ? ticketValidation(onSpecificTicket) : void 0;
+              typeof onTicketRange !== "undefined" && Array.isArray(onTicketRange) ? onTicketRange.forEach( v => ticketValidation(v) ) : void 0;
 
-            	if ( typeof overrideReturn === "undefined" ) {
+              if ( onSpecificTicket === drawnTicket || typeof onTicketRange !== "undefined" && drawnTicket >= onTicketRange[0] && drawnTicket <= onTicketRange[1] || onIsWinningState === isWinning ) {
 
-            		callback();
+                if ( typeof callback === "function" && typeof storeValue === "undefined" ) {
 
-            	}
+                  callback();
 
-            	else if ( typeof overrideReturn === "boolean" && overrideReturn === true ) {
+                }
 
-                	callbackReturn.push(callback());
+                else if ( typeof callback === "function" && storeValue === true ) {
 
-            	}
+                  callbackReturn.push( callback() );
+
+                }
 
               }
 
