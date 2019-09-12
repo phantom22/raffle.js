@@ -103,6 +103,6 @@ const trigger = raffleDraw({
 console.log(trigger); // [1,2,3]
 
 ```
-*All the callbacks with storeValue will push into an array their return value, as a result `raffleDraw` won't return an object but an array with these values.*
+*All the callbacks with storeValue will push into an array their return value, as a result `raffleDraw` will return an array with these values.*
 ---
 P.S the randomized numbers inside of the `raffleDraw` function will constist of numbers between `1` and the `amountOfTickets` variable, so it's possible to make a trigger with no chance of winning by setting `winningTickets` to `[0]`, a number that cannot be randomized inside the function
