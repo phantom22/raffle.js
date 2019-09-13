@@ -25,6 +25,7 @@ const trigger = raffleDraw({
 });
 
 ```
+
 ## `raffleDraw` returns an object with the following variables:
 * **drawnTicket** is the number randomized by the function
 * **isWinning** is a boolean, and it will be used exactly as `Math.floor( Math.random() * number1 ) <= number2` in an application
@@ -41,6 +42,7 @@ const trigger = raffleDraw({
 )};
 
 ```
+
 If an invalid number will be passed to the `winningTickets` variable, then the function will return an error.
 List of invalid numbers:
 - non integer numbers
@@ -66,6 +68,7 @@ const trigger = raffleDraw({
 })
 
 ```
+
 ## Returning randomized number after all the events are done:
 ```js
 
@@ -85,6 +88,7 @@ const random = raffleDraw({
 }).drawnTicket;
 
 ```
+
 ## Returning an array containing all the callback values:
 ```js
 const trigger = raffleDraw({
@@ -104,5 +108,22 @@ console.log(trigger); // [1,2,3]
 
 ```
 *All the callbacks with storeValue set to true will push into an array their return value, as a result `raffleDraw` will be an array with these values.*
+
+## Accessing raffleDraw variables from the callbacks:
+```js
+const drawnTicket = raffleDraw.bind(raffleDraw)({
+  
+  amountOfTickets: 100,
+  winningTickets: [0],
+  
+  events: [
+  
+    { onTicketRange: [1,100], callback() { console.log( this.drawnTicket, this.isWinning, this.winningTickets ) } } // a number from 1 to 100, false, [0]
+  
+  ]
+  
+})
+```
+
 ---
 P.S the randomized numbers inside of the `raffleDraw` function will constist of numbers between `1` and the `amountOfTickets` variable, so it's possible to make a trigger with no chance of winning by setting `winningTickets` to `[0]`, a number that cannot be randomized inside the function
