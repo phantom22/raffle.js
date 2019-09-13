@@ -3,7 +3,7 @@ function raffleDraw(object) {
   if ( typeof object === "object" ) {
 
     const { amountOfTickets, amountOfWinningTickets, winningTickets, events } = object,
-  a = amountOfTickets,
+    a = amountOfTickets,
     random = () => Math.floor( Math.random() * a + 1 ),
     callbackReturn = [],
     ticketValidation = function(v){ if ( typeof v !== "undefined" && ( Number.isInteger(v) === true && v >= 0 && v <= a && c.slice( c.indexOf(v) + 1 ).indexOf(v) === -1 ) === false ) { throw TypeError(`\`${v}' is an invalid ticket number.`) } };
@@ -40,6 +40,14 @@ function raffleDraw(object) {
         const drawnTicket = random(),
         isWinning = c.includes( drawnTicket );
 
+        if ( typeof this === "function" && this.name === "raffleDraw" ) { 
+
+          this.drawnTicket = drawnTicket;
+          this.isWinning = isWinning;
+          this.winningTickets = winningTickets;
+
+        }
+
         if ( typeof events !== "undefined" && Array.isArray(events) ) {
 
           events.forEach( v => {
@@ -60,13 +68,13 @@ function raffleDraw(object) {
 
                 if ( typeof callback === "function" && typeof storeValue === "undefined" ) {
 
-                  callback();
+                  typeof this === "function" ? callback.bind(this)() : callback();
 
                 }
 
                 else if ( typeof callback === "function" && storeValue === true ) {
 
-                  callbackReturn.push( callback() );
+                  typeof this === "function" ? callbackReturn.push( callback.bind(this)() ) : callbackReturn.push( callback() );
 
                 }
 
