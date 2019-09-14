@@ -9,7 +9,7 @@ raffleDraw({ amountOfTickets: 100, amountOfWinningTickets: 10, events: [] })
 
 * **amountOfWinningTickets**: the dividend of a fraction
 
-* **winningTickets**: replaces the `amountOfWinningTickets` variable or vice versa, It's an array of numbers that manually defined the winning tickets array.
+* **winningTickets**: replaces the `amountOfWinningTickets` variable or vice versa, it's an array of numbers that manually defined the `winningTickets` array.
 
 * **events**: array of objects that defines all the events that depend on the `drawnTicket` and the `isWinning` variables.
 
