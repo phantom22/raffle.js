@@ -5,9 +5,9 @@ This function allows making multiple function calls if the randomized number is 
 ```js
 raffleDraw({ amountOfTickets: 100, amountOfWinningTickets: 10, events: [] })
 ```
-* **amountOfTickets**: the whole of a fraction
+* **amountOfTickets**: the whole of a fraction.
 
-* **amountOfWinningTickets**: the dividend of a fraction
+* **amountOfWinningTickets**: the dividend of a fraction.
 
 * **winningTickets**: replaces the `amountOfWinningTickets` variable or vice versa, it's an array of numbers that manually defined the `winningTickets` array.
 
