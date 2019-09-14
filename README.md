@@ -1,129 +1,64 @@
-# raffle.js
+# Raffle.js
+This function allows making multiple function calls if the randomized number is included in a **ranges of numbers** or is equal to a **particular one** and stores the return values of all the callbacks into an array.
 
-Instead of using code like in the example above, raffle.js (improves?) randomizing events by creating an array of random numbers in a range between `1` and the `amountOfWinningTickets` variable and then randomizes a number, that if included in the array, will set isWinning to `true`. Also, this function allows making multiple function calls if the randomized number is included in **ranges of numbers** or is equal to a **particular integer** and stores the return values of all the events that provide a `storeValue` variable set to `true` into an array, returned at the end of the iteration.
-
-### Example of randomizing a trigger the old way:
+##  function syntax
 ```js
-
-const chance = 20,
-random = Math.floor( Math.random() * 100 );
-
-if ( random <= chance ) {
-  // do something here
-}
-
+raffleDraw({ amountOfTickets: 100, amountOfWinningTickets: 10, events: [] })
 ```
+* **amountOfTickets**: the whole of a fraction
 
-## Usage:
+* **amountOfWinningTickets**: the dividend of a fraction
+
+* **winningTickets**: replaces the `amountOfWinningTickets` variable or vice versa, it's  an array of numbers.
+
+* **events**: array of objects that define all the events that depend on the `drawnTicket` and the `isWinning` variables.
+
+The function will work only if `amountOfTickets` and `amountOfWinningTickets`/`winningTickets` variables are defined, the `events` variable is omittable if you don't need any events to occur.
+## event syntax
 ```js
-
-const trigger = raffleDraw({
-
-  amountOfTickets: 100,
-  amountOfWinningTickets: 10 // in this case 10 is the equivalent of 10%
-
-});
-
+raffleDraw({ amountOfTickets: 100, amountOfWinningTickets: 100, events: [
+  { onSpecificTicket: 1, callback() { console.log("Wow you're lucky!") } },
+  { onTicketRange: [1, 100], callback() { return "Hello World!" } },
+  { onIsWinningState: true, callback() { return "You won!" } }
+]})
 ```
+There are **three different events**:
+* **onSpecificTicket**: its value must be a *number*, the event triggers when this number *matches* with the `drawnTicket` variable.
 
-## `raffleDraw` returns an object with the following variables:
-* **drawnTicket** is the number randomized by the function
-* **isWinning** is a boolean, and it will be used exactly as `Math.floor( Math.random() * number1 ) <= number2` in an application
-* **winningTickets** is an array of all the numbers that will set "isWinning" to true if randomized
+* **onTicketRange**: it's an array of two numbers, both numbers should be valid, and the event triggers when the `drawnTicket` variable is between these integers.
 
-#### Defining the array of `winningTickets` instead of letting the function randomize it:
+* **onIsWinningState**: it's a boolean, the event triggers when the `onIsWinningState` value matches with the `isWinning` variable.
+
+All the callbacks that have a `return` value that is different from `undefined` will be stored inside the `storedValues` variable. In the example above the `storedValues` variable at the end of the iteration will consist of two values: `["Hello world!","You won!"]`
+Also it's possible to make an instance that has `0 ` chance for the `isWinning` variable to be true, by setting `winningTickets` to `[0]`
+
+## Valid ticket numbers
+Only **valid** numbers will work for ticket variables like `winningTickets` , `onSpecificTicket` or `onTicketRange`
+and they must be **positive integers** that are **smaller or equal** to the `amountOfTickets` variable.
+Also the `drawnTicket` variable is a number that is higher than `0` and **smaller or equal** to the `amountOfTickets` variable.
+
+## This function returns an object with *four* variables
+*  **drawnTicket**: number randomized by the *function*.
+
+* **isWinning**: boolean, true if `drawnTicket` is equal to one of the numbers inside of the `winningTickets` array.
+
+* **winningTickets**: array of all the numbers that will set `isWinning` to true if randomized.
+
+* **storedValues**: array of all the `defined` values returned from the callbacks.
+
+## Accessing `raffleDraw` variables from within a callback
 ```js
-
-const trigger = raffleDraw({
-
-  amountOfTickets: 100,
-  winningTickets: [5,10,15,20,25,30]
-
-)};
-
+raffleDraw.bind(raffleDraw)({ amountOfTickets: 100, winningTickets: [0], events: [
+  { 
+    onTicketRange: [1, 100], 
+    callback() { 
+      console.log( this.drawnTicket, this.isWinning, this.winningTickets );
+    } 
+  }
+]})
 ```
-
-If an invalid number will be passed to the `winningTickets` variable, then the function will return an error.
-List of invalid numbers:
-- non integer numbers
-- negative numbers
-- numbers that are higher than `amountOfTickets`
-
-*Obviously it's still `pseudo-random` because the numbers are created entirely with `Math.random`.*
-
-## Adding a callback to the function:
-```js
-
-const trigger = raffleDraw({
-
-  amountOfTickets: 100,
-  amountOfWinningTickets: 50, // 50% of isWinning being set to true
-  events: [
-    { onIsWinningState: true, callback() { console.log("You won!") } }, // triggers if onIsWinningState is equal to the isWinning variable
-    { onIsWinningState: false, callback() { console.log("You lost!") } },
-    { onSpecificTicket: 25, callback() { console.log("Your ticket number is 25!") } }, // triggers exclusively if the drawnTicket variable is equal to the onSpecificTicket variable
-    { onTicketRange: [25,35], callback() { console.log("Your ticket number is between 25 and 35!") } } // the number range includes the two numbers used to define it
-  ]
-  
-})
-
-```
-
-## Returning randomized number after all the events are done:
-```js
-
-const random = raffleDraw({
-
-  amountOfTickets: 100,
-  amountOfWinningTickets: 50,
-  events: [
-    { onTicketRange: [1,10], callback() { /* do something */ } },
-    { onTicketRange: [11,20], callback() { /* do something */ } },
-    { onTicketRange: [21,30], callback() { /* do something */ } },
-    { onTicketRange: [31,40], callback() { /* do something */ } },
-    { onIsWinningState: true, callback() { /* do something if isWinning is true */ } },
-    { onIsWinningState: false, callback() { /* do something if isWinning is false */ } }
-  ]
-  
-}).drawnTicket;
-
-```
-
-## Returning an array containing all the callback values:
-```js
-const trigger = raffleDraw({
-
-  amountOfTickets: 100,
-  amountOfWinningTickets: 100, // 100% of isWinning being set to true
-  events: [
-    { onTicketRange: [1,100], storeValue: true, callback() { return 1 } }, // in this case, onTicketRange: [1,100] allows any randomized number to trigger the callback
-    { onTicketRange: [1,100], storeValue: true, callback() { return 2 } },
-    { onTicketRange: [1,100], storeValue: true, callback() { return 3 } },
-    { onTicketRange: [1,100], callback() { return 4 } } // storeValue is not defined and as a result, "4" won't be pushed into the array.
-  ]
-  
-});
-
-console.log(trigger); // [1,2,3]
-
-```
-*All the callbacks with storeValue set to true will push into an array their return value, as a result `raffleDraw` will be an array with these values.*
-
-## Accessing raffleDraw variables from the callbacks:
-```js
-const drawnTicket = raffleDraw.bind(raffleDraw)({
-  
-  amountOfTickets: 100,
-  winningTickets: [0],
-  
-  events: [
-  
-    { onTicketRange: [1,100], callback() { console.log( this.drawnTicket, this.isWinning, this.winningTickets ) } } // a number from 1 to 100, false, [0]
-  
-  ]
-  
-})
-```
+In the example above the callback, no matter what is the value of the `drawnTicket` variable, will log into the console the three accessible values which are `drawnTicket`, `isWinning` and `winningTickets`, no other variables are accessible with the `this.` prefix.
 
 ---
-P.S the randomized numbers inside of the `raffleDraw` function will constist of numbers between `1` and the `amountOfTickets` variable, so it's possible to make a trigger with no chance of winning by setting `winningTickets` to `[0]`, a number that cannot be randomized inside the function
+#### Thanks for reading the documentation, if you want to give me some feedback I would be glad to hear it!
+---
