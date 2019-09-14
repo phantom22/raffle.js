@@ -33,6 +33,8 @@ All the callbacks that have a `return` value that is different from `undefined` 
 
 Also it's possible to make an instance that has `0 ` chance for the `isWinning` variable to be true, by setting `winningTickets` to `[0]`
 
+P.S. the callback function must be named as `callback`
+
 ## Valid ticket numbers
 Only **valid** numbers will work for ticket variables like `winningTickets` , `onSpecificTicket` or `onTicketRange`
 and they must be **positive integers** that are **smaller or equal** to the `amountOfTickets` variable.
