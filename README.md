@@ -37,7 +37,7 @@ Also it's possible to make an instance that has `0 ` chance for the `isWinning` 
 Only **valid** numbers will work for ticket variables like `winningTickets` , `onSpecificTicket` or `onTicketRange`
 and they must be **positive integers** that are **smaller or equal** to the `amountOfTickets` variable.
 
-Also the `drawnTicket` variable is a number that is **higher or equal** to `0` and **smaller or equal** to the `amountOfTickets` variable.
+Also the `drawnTicket` variable is a number that is **higher or equal** to `1` and **smaller or equal** to the `amountOfTickets` variable.
 
 ## This function returns an object with *four* variables
 *  **drawnTicket**: number randomized by the *function*.
