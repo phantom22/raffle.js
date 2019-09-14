@@ -1,5 +1,5 @@
 # Raffle.js
-This function allows making multiple function calls if the randomized number is included in a **ranges of numbers** or is equal to a **particular one** and stores the return values of all the callbacks into an array.
+This function allows making multiple function calls if the randomized number is included in a **range of numbers** or is equal to a **particular one** and stores the return values of all the callbacks into an array.
 
 ##  function syntax
 ```js
@@ -11,7 +11,7 @@ raffleDraw({ amountOfTickets: 100, amountOfWinningTickets: 10, events: [] })
 
 * **winningTickets**: replaces the `amountOfWinningTickets` variable or vice versa, it's  an array of numbers.
 
-* **events**: array of objects that define all the events that depend on the `drawnTicket` and the `isWinning` variables.
+* **events**: array of objects that defines all the events that depend on the `drawnTicket` and the `isWinning` variables.
 
 The function will work only if `amountOfTickets` and `amountOfWinningTickets`/`winningTickets` variables are defined, the `events` variable is omittable if you don't need any events to occur.
 ## event syntax
@@ -30,12 +30,14 @@ There are **three different events**:
 * **onIsWinningState**: it's a boolean, the event triggers when the `onIsWinningState` value matches with the `isWinning` variable.
 
 All the callbacks that have a `return` value that is different from `undefined` will be stored inside the `storedValues` variable. In the example above the `storedValues` variable at the end of the iteration will consist of two values: `["Hello world!","You won!"]`
+
 Also it's possible to make an instance that has `0 ` chance for the `isWinning` variable to be true, by setting `winningTickets` to `[0]`
 
 ## Valid ticket numbers
 Only **valid** numbers will work for ticket variables like `winningTickets` , `onSpecificTicket` or `onTicketRange`
 and they must be **positive integers** that are **smaller or equal** to the `amountOfTickets` variable.
-Also the `drawnTicket` variable is a number that is higher than `0` and **smaller or equal** to the `amountOfTickets` variable.
+
+Also the `drawnTicket` variable is a number that is higher **higher or equal** to `0` and **smaller or equal** to the `amountOfTickets` variable.
 
 ## This function returns an object with *four* variables
 *  **drawnTicket**: number randomized by the *function*.
@@ -57,7 +59,7 @@ raffleDraw.bind(raffleDraw)({ amountOfTickets: 100, winningTickets: [0], events:
   }
 ]})
 ```
-In the example above the callback, no matter what is the value of the `drawnTicket` variable, will log into the console the three accessible values which are `drawnTicket`, `isWinning` and `winningTickets`, no other variables are accessible with the `this.` prefix.
+In the example above, no matter what is the value of the `drawnTicket` variable, the callback will log into the console the three accessible values which are `drawnTicket`, `isWinning` and `winningTickets`, no other variables are accessible with the prefix `this.`
 
 ---
 #### Thanks for reading the documentation, if you want to give me some feedback I would be glad to hear it!
