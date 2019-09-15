@@ -37,7 +37,7 @@ P.S. the callback function must be named as `callback`
 
 ## Valid ticket numbers
 Only **valid** numbers will work for ticket variables like `winningTickets` , `onSpecificTicket` or `onTicketRange`
-and they must be **positive integers** that are **smaller or equal** to the `amountOfTickets` variable.
+and they must be **positive integers**, included `0`, that are **smaller or equal** to the `amountOfTickets` variable.
 
 Also the `drawnTicket` variable is a number that is **higher or equal** to `1` and **smaller or equal** to the `amountOfTickets` variable.
 
