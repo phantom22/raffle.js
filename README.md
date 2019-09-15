@@ -61,7 +61,7 @@ raffleDraw.bind(raffleDraw)({ amountOfTickets: 100, winningTickets: [0], events:
   }
 ]})
 ```
-In the example above, no matter what is the value of the `drawnTicket` variable, the callback will log into the console the three accessible values which are `drawnTicket`, `isWinning` and `winningTickets`, no other variables are accessible with the prefix `this.`
+In the example above, no matter what is the value of the `drawnTicket` variable, the callback will log into the console the three accessible values which are `drawnTicket`, `isWinning` and `winningTickets`, no other raffleDraw variables are accessible with the prefix `this.`
 
 ---
 #### Thanks for reading the documentation, if you want to give me some feedback I would be glad to hear it!
